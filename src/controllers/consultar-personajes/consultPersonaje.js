@@ -4,9 +4,7 @@ const Personaje = require("../../models/personajes");
 const sequelize = require("../../models/db");
 
 class CosultPersonaje {
-  constructor(hostname, port) {
-    this.hostname = hostname;
-    this.port = port;
+  constructor() {
     this.app = express();
     this.app.use(cors());
     this.app.use(express.json());
@@ -38,10 +36,12 @@ class CosultPersonaje {
     });
   }
   iniciarServidor() {
-    this.app.listen(this.port, this.hostname, () => {
-      console.log(`Servidor ejecutándose en http://${this.hostname}:${this.port}`);
+    const port = process.env.PORT || 3001;
+    const host = "0.0.0.0";
+    this.app.listen(port, host, () => {
+      console.log(`Servidor ejecutándose en http://${host}:${port}`);
     });
   }
 }
 
-new CosultPersonaje("127.0.0.1", 3001);
+new CosultPersonaje();

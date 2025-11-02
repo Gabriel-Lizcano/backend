@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:consult": "node src/controllers/consultar-personajes/consultPersonaje.js",
+    "start:insert": "node src/controllers/insertar-personajes/insertPersonaje.js",
+    "start:swagger": "node src/services/serverSwagger.js"
   },
   "keywords": [],
   "author": "",

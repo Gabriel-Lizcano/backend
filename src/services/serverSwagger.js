@@ -4,12 +4,10 @@ const swaggerUi = require("swagger-ui-express");
 const swaggerJSDoc = require("swagger-jsdoc");
 const yaml= require("yamljs");
 const path = require("path");
-const swaggerDocument = yaml.load("./swagger.yaml");
+const swaggerDocument = yaml.load(path.join(__dirname, "swagger.yaml"));
 
 class ServerSwagger {
-  constructor(hostname, port) {
-    this.hostname = hostname;
-    this.port = port;
+  constructor() {
     this.app = express();
     this.app.use(cors());
     this.app.use(express.json());
@@ -20,12 +18,14 @@ class ServerSwagger {
     this.app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
     }
     iniciarServidor() {
-    this.app.listen(this.port, this.hostname, () => {
+      const port = process.env.PORT  || 3002;
+      const host = "0.0.0.0";
+    this.app.listen(port, host, () => {
       console.log(
-        `Servidor Swagger ejecutándose en http://${this.hostname}:${this.port}/api-docs`
+        `Servidor Swagger ejecutándose en http://${host}:${port}/api-docs`
       );
     });
   }
 }
 
-new ServerSwagger("127.0.0.1", 3002);
+new ServerSwagger();

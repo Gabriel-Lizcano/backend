@@ -4,9 +4,7 @@ const Personaje = require("../../models/personajes");
 const sequelize = require("../../models/db");
 
 class InsertPersonaje {
-  constructor(hostname, port) {
-    this.hostname = hostname;
-    this.port = port;
+  constructor() {
     this.app = express();
     this.app.use(cors());
     this.app.use(express.json());
@@ -44,12 +42,14 @@ class InsertPersonaje {
   }
 
   iniciarServidor() {
-    this.app.listen(this.port, this.hostname, () => {
+    const port = process.env.PORT || 3000;
+    const host = "0.0.0.0";
+    this.app.listen(port, host, () => {
       console.log(
-        `Servidor ejecutándose en http://${this.hostname}:${this.port}`
+        `Servidor ejecutándose en http://${host}:${port}`
       );
     });
   }
 }
 
-new InsertPersonaje("127.0.0.1", 3000);
+new InsertPersonaje();
