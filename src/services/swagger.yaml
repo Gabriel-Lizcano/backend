@@ -5,10 +5,10 @@ info:
   description: API para gestionar personajes de Los Caballeros del Zodiaco
 
 servers:
-  - url: http://127.0.0.1:3001
-    description: Servidor local consultar personajes
-  - url: http://127.0.0.1:3000
-    description: Servidor local insertar personaje
+  - url: https://consultar-personajes.onrender.com
+    description: Servidor online para consultar personajes
+  - url: https://insertar-personajes.onrender.com
+    description: Servidor online para insertar personaje
 
 paths:
   /consultar-personajes:
