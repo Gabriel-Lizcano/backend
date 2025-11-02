@@ -1,0 +1,84 @@
+openapi: 3.0.0
+info:
+  title: API Caballeros del Zodiaco
+  version: 1.0.0
+  description: API para gestionar personajes de Los Caballeros del Zodiaco
+
+servers:
+  - url: http://127.0.0.1:3001
+    description: Servidor local consultar personajes
+  - url: http://127.0.0.1:3000
+    description: Servidor local insertar personaje
+
+paths:
+  /consultar-personajes:
+    get:
+      summary: Consultar todos los personajes
+      responses:
+        '200':
+          description: Lista de personajes obtenida correctamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                    nombre:
+                      type: string
+                      example: Seiya
+                    edad:
+                      type: integer
+                      example: 15
+                    altura:
+                      type: number
+                      example: 1.65
+                    constelacion:
+                      type: string
+                      example: Pegaso
+                    urlImagen:
+                      type: string
+                      example: "http://example.com/seiya.jpg"
+        '500':
+          description: Error al consultar los personajes
+
+  /insertar-personajes:
+    post:
+      summary: Inserta un nuevo personaje
+      description: Agrega un nuevo personaje con su nombre, edad, altura, constelación y URL de imagen.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nombre:
+                  type: string
+                  example: Seiya
+                edad:
+                  type: integer
+                  example: 15
+                altura:
+                  type: number
+                  example: 1.65
+                constelacion:
+                  type: string
+                  example: Pegaso
+                urlImagen:
+                  type: string
+                  example: "http://example.com/seiya.jpg"
+              required:
+                - nombre
+                - edad
+                - altura
+                - constelacion
+                - urlImagen
+      responses:
+        '201':
+          description: Personaje insertado correctamente
+        '500':
+          description: Error al insertar el personaje
