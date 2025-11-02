@@ -1,9 +1,9 @@
 const express = require("express");
 const cors = require("cors");
-const Personaje = require("../models/personajes");
-const sequelize = require("../models/db");
+const Personaje = require("../../models/personajes");
+const sequelize = require("../../models/db");
 
-class InsertPersonaje {
+class CosultPersonaje {
   constructor(hostname, port) {
     this.hostname = hostname;
     this.port = port;
@@ -14,6 +14,7 @@ class InsertPersonaje {
     this.rutas();
     this.iniciarServidor();
   }
+
   async conectardb() {
     try {
       await sequelize.authenticate();
@@ -24,32 +25,23 @@ class InsertPersonaje {
       console.error("No se pudo conectar a la base de datos:", error);
     }
   }
+
   rutas() {
-    this.app.post("/insertar-personajes", async (req, res) => {
+    this.app.get("/consultar-personajes", async (req, res) => {
       try {
-        const { nombre, edad, altura, constelacion, urlImagen } = req.body;
-        const nuevoPersonaje = await Personaje.create({
-          nombre,
-          edad,
-          altura,
-          constelacion,
-          urlImagen,
-        });
-        res.status(201).json(nuevoPersonaje);
+        const personajes = await Personaje.findAll();
+        res.status(200).json(personajes);
       } catch (error) {
-        console.error("Error al insertar el personaje:", error);
-        res.status(500).json({ error: "Error al insertar el personaje" });
+        console.error("Error al consultar los personajes:", error);
+        res.status(500).json({ error: "Error al consultar los personajes" });
       }
     });
   }
-
   iniciarServidor() {
     this.app.listen(this.port, this.hostname, () => {
-      console.log(
-        `Servidor ejecutándose en http://${this.hostname}:${this.port}`
-      );
+      console.log(`Servidor ejecutándose en http://${this.hostname}:${this.port}`);
     });
   }
 }
 
-new InsertPersonaje("127.0.0.1", 3000);
+new CosultPersonaje("127.0.0.1", 3001);
